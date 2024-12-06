@@ -1,0 +1,653 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Writ",
+				"WriteLine"
+			],
+			[
+				"NU",
+				"NUM_BODIES"
+			],
+			[
+				"SDL_Draw",
+				"SDL_SetRenderDrawColor"
+			],
+			[
+				"y_",
+				"y_ecp"
+			],
+			[
+				"chea",
+				"cheat_active"
+			],
+			[
+				"SDL_SC",
+				"SDL_SCANCODE_S"
+			],
+			[
+				"SDL_Lock",
+				"SDL_LockTexture"
+			],
+			[
+				"clock",
+				"clock_t"
+			],
+			[
+				"textu",
+				"textures"
+			],
+			[
+				"text",
+				"texture_ih"
+			],
+			[
+				"textur",
+				"texture_ih"
+			],
+			[
+				"MAP",
+				"MAPY"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "simulations/boids.c",
+			"settings":
+			{
+				"buffer_size": 4811,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "simulations/universe.c",
+			"settings":
+			{
+				"buffer_size": 2502,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/pupkich/projects/chordgen.py",
+			"settings":
+			{
+				"buffer_size": 1732,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//0\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//1\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//2\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//3\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//4\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//5\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//6\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//7\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//8\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//9\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//10\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//11\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//12\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//13\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,//14\n\t\t1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,\n\nvoid drawSky(void *tpixels, SDL_Surface *surface, struct player P)\n{\n\tUint32 *edited = (Uint32 *)malloc(WIDTH*HEIGHT/2*sizeof(Uint32));\n\tfor(int y = 1; y < HEIGHT/2; y++)\n\t\tfor(int x = 0; x < WIDTH; x++)\n\t\t{\n\t\t\tint xo = (int)(-P.th*WIDTH/(FOV*DEG)) - x;\n\t\t\tif(xo < 0) {xo += WIDTH;}\n\t\t\txo %= WIDTH; \n\t\t\tint index = (y*WIDTH + xo)*3;\n\t\t\tchar red = sky[index];\n\t\t\tchar green = sky[index +1];\n\t\t\tchar blue = sky[index +2];\n\t\t\tedited[y*WIDTH + x] = SDL_MapRGB(surface->format, red, green, blue);\n\t\t}\n\tmemcpy(tpixels, edited, sizeof(WIDTH*HEIGHT/2*sizeof(Uint32)));\n\tfree(edited);\n}\n\nUint32 mixSDLColors(Uint32 back, Uint32 front, SDL_PixelFormat *fmt, int alpha)\n{\n\tif(alpha == 0)\n\t\treturn front;\n\n\tUint32 ch1, ch2, sum = 0;\n\n\tch1 = back & fmt->Rmask;\n\tch2 = front & fmt->Rmask;\n\tsum |= (ch1 + ch2) >> 1 & fmt->Rmask;\n\n\tch1 = back & fmt->Gmask;\n\tch2 = front & fmt->Gmask;\n\tsum |= (ch1 + ch2) >> 1 & fmt->Gmask;\n\n\tch1 = back & fmt->Bmask;\n\tch2 = front & fmt->Bmask;\n\tsum |= (ch1 + ch2) >> 1 & fmt->Bmask;\n\n\tsum |= front & !(fmt->Rmask + fmt->Gmask + fmt->Bmask);\n\treturn sum;\n}",
+			"settings":
+			{
+				"buffer_size": 1681,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/pupkich/Документы/physgraph.c",
+			"settings":
+			{
+				"buffer_size": 642,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "#include <stdlib.h>\n\n#ifdef _WIN32 // грубый способ определения; на деле разница не в ОС, а в компиляторe\n\t#include <SDL.h>\n\t#include <SDL_image.h>\n\t#include <SDL_timer.h>\n#else\n\t#include <SDL2/SDL.h>\n\t#include <SDL2/SDL_image.h>\n\t#include <SDL2/SDL_timer.h>\n#endif\n\n#define HEIGHT 480\n#define WIDTH 640\n#define CELL 16\n#define DELAY 10\n\nstruct cell {int x, y, birth_num, death_num} \n\t\t\tcells[HEIGHT * WIDTH / CELL];\n\nvoid render(SDL_Renderer *renderer, SDL_Rect *cellrects) {\n\tSDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // фон\n\tSDL_RenderClear(renderer);\n\tSDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);\n\n\tfor(int i = 0; i<HEIGHT * WIDTH / CELL; i++) {\n\t\tfor(int j = 0; j<WIDTH / CELL; j++) {\n\t\t\tcellrects[i*WIDTH + j].x = i*CELL + CELL/2;\n\t\t\tcellrects[i*WIDTH + j].y = j*CELL + CELL/2;\n\t\t\tcellrects[i*WIDTH + j].w = CELL;\n\t\t\tcellrects[i*WIDTH + j].h = CELL;\n\t\t\tSDL_RenderDrawRect(renderer, cellrects[i]);\n\t\t}\n\t}\n\n\tSDL_RenderPresent(renderer);\n}\n\nint processEvents(SDL_Window *window) {\n\tSDL_Event event;\n\n\twhile(SDL_PollEvent(&event))\n\t{\n\t\tswitch(event.type)\n\t\t{\t\n\t\t\tcase SDL_WINDOWEVENT_CLOSE:\n\t\t\t\tif(window)\n\t\t\t\t{\n\t\t\t\t\tSDL_DestroyWindow(window);\n\t\t\t\t\twindow = NULL;\n\t\t\t\t\treturn 1;\n\t\t\t\t}\n\t\t\t\tbreak;\n\t\t\t\n\t\t\tcase SDL_KEYDOWN:\n\t\t\t\tswitch(event.key.keysym.sym) {\n\t\t\t\t\tcase SDLK_ESCAPE:\n\t\t\t\t\t\treturn 1;\n\t\t\t\t}\n\t\t}\n\t}\n\treturn 0;\n}\n\nint main(int argc, char *argv[]) {\n\tint birth_n, death_n;\n\tSDL_Rect cellrects[HEIGHT * WIDTH / CELL];\n\n\tprintf(\"Введите условия игры через пробел: \");\n\tscanf(\"%d %d\", birth_n, death_n);\n\n\tfor(int i = 0; i<HEIGHT/CELL; i++) {\n\t\tfor(int j = 0; j<WIDTH/CELL; j++) {\n\t\t\tcells[i*WIDTH + j].x = i;\n\t\t\tcells[i*WIDTH + j].y = j;\n\t\t\tcells[i*WIDTH + j].birth_num = birth_n;\n\t\t\tcells[i*WIDTH + j].death_num = death_n;\n\t\t}\n\t}\n\n\tSDL_Window *window = NULL;\n\tSDL_Renderer *renderer = NULL;\n\n\tSDL_Init(SDL_INIT_VIDEO);\n\twindow = SDL_CreateWindow(\"Life game\",\n\t\t\t\t  SDL_WINDOWPOS_CENTERED,\n\t\t\t\t  SDL_WINDOWPOS_CENTERED,\n\t\t\t\t  WIDTH,\n\t\t\t\t  HEIGHT,\n\t\t\t\t  0);\n\trenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);\n\n\twhile(1) {\n\t\tif(processEvents(window) == 1)\n\t\t\tbreak;\n\t\trender(renderer, &cellrects);\n\t\tupdatePos(renderer);\n\t\tSDL_Delay(DELAY);\n\t}\n\n\treturn 0;\n}",
+			"settings":
+			{
+				"buffer_size": 2196,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/pupkich/Документы/Операционные системы/лабы/1.cpp",
+			"settings":
+			{
+				"buffer_size": 1601,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C Single File.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/pupkich/projects/calc.c",
+		"/home/pupkich/Документы/data.txt",
+		"/home/pupkich/projects/progressbar.c",
+		"/home/pupkich/Документы/лаба7.py",
+		"/home/pupkich/Документы/[HR][string-similarity].py",
+		"/home/pupkich/Документы/E178.py",
+		"/home/pupkich/Документы/E162.py",
+		"/home/pupkich/Документы/E166.py",
+		"/home/pupkich/Документы/лаба5.py",
+		"/home/pupkich/Документы/lab5-16.py",
+		"/home/pupkich/Документы/вычмат/лаба5.cs",
+		"/home/pupkich/Документы/лаба4.py",
+		"/home/pupkich/Документы/Программная инженерия/лаб5-1.py",
+		"/home/pupkich/Документы/вычмат/ргр1.c",
+		"/home/pupkich/Документы/вычмат/лаба4/лаба4.py",
+		"/home/pupkich/Документы/вычмат/Lab-4_Vars.txt",
+		"/home/pupkich/Документы/вычмат/лаба2/POG.txt",
+		"/home/pupkich/Документы/вычмат/лаба3/лаба3.cpp",
+		"/home/pupkich/Документы/вычмат/лаба2/лаба2.c",
+		"/home/pupkich/Документы/вычмат/Lab-3_Vars.txt",
+		"/home/pupkich/Документы/Программная инженерия/виталя.pl",
+		"/home/pupkich/Gameproj/main.c",
+		"/home/pupkich/Gameproj/levels/level_test.dat",
+		"/home/pupkich/Документы/Программная инженерия/lab2.pl",
+		"/home/pupkich/Документы/вычмат/лаба3/data.dat",
+		"/home/pupkich/Документы/вычмат/лаба3.cpp",
+		"/home/pupkich/Gameproj/var.conf",
+		"/home/pupkich/Документы/Программная инженерия/Prolog/lab1-2.py",
+		"/home/pupkich/Документы/Программная инженерия/Prolog/lab1-1.py",
+		"/home/pupkich/Документы/Программная инженерия/Prolog/lab1-2.pl",
+		"/home/pupkich/Документы/Программная инженерия/Prolog/lab1-1.pl",
+		"/home/pupkich/Документы/вычмат/tmp.c",
+		"/home/pupkich/Документы/вычмат/vit/input.txt",
+		"/home/pupkich/Документы/вычмат/vit/l2.c",
+		"/home/pupkich/Документы/вычмат/лаба2.c",
+		"/home/pupkich/Документы/вычмат/l2.c",
+		"/home/pupkich/test_del.c",
+		"/home/pupkich/projects/imgcoder.c",
+		"/home/pupkich/Документы/Лекции/Парадигмы программирования",
+		"/home/pupkich/projects/polynomsolver.c",
+		"/home/pupkich/projects/fastinvsqrt.c",
+		"/home/pupkich/orthoc.orh",
+		"/home/pupkich/привечатимир.c",
+		"/home/pupkich/Gameproj/testrender.c",
+		"/home/pupkich/test.c",
+		"/home/pupkich/Gameproj/bbbackup.c",
+		"/home/pupkich/Gameproj/backupkindaworks.c",
+		"/home/pupkich/Gameproj/backupmain.c",
+		"/home/pupkich/Gameproj/test.c",
+		"/home/pupkich/.config/sublime-text-3/Packages/User/CMake.sublime-build",
+		"/home/pupkich/Загрузки/ks16lab5.c",
+		"/home/pupkich/projects/gameproj/main.c",
+		"/home/pupkich/.config/sublime-text-3/Packages/User/Preferences.sublime-settings"
+	],
+	"find":
+	{
+		"height": 32.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"particles",
+			"0, ",
+			"    ",
+			"sovp",
+			"    ",
+			"\t",
+			"    ",
+			"MULCHAR_L",
+			"int",
+			"readdata",
+			"in_str",
+			"manualinput",
+			"ind",
+			"inputdata",
+			"eksp_t",
+			"p_list",
+			"T_list",
+			"tablica",
+			"-\\n",
+			"\\n",
+			"\\t*",
+			" ",
+			",",
+			"fy",
+			"базаОфицеров",
+			", *",
+			"14",
+			"\\n",
+			",",
+			"\\n",
+			"\\t\\n",
+			",",
+			"gnuPipe",
+			" ",
+			"\\n",
+			"\t",
+			"M_E",
+			"zbuf",
+			"0,",
+			"1,",
+			"1",
+			"2",
+			"0",
+			"1",
+			"6",
+			"64",
+			"SQRTTILE",
+			"TILESIZE",
+			"(th"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"cellrects",
+			"",
+			"\\t",
+			"sim",
+			"\\t",
+			"    ",
+			"\\t",
+			"CHARLEN",
+			"readfiled",
+			"strng",
+			"userinp",
+			"num",
+			"vvod_znac",
+			"tabl",
+			"p_val",
+			"T_val",
+			"rasc_t",
+			"",
+			", ",
+			"\\n",
+			"\\t",
+			".",
+			"базаофицеров",
+			"\\t\\n",
+			"\\t",
+			"N",
+			", ",
+			".",
+			", ",
+			".",
+			"gnupipe",
+			", ",
+			"\\n{",
+			"},\\n",
+			" ",
+			"M_e",
+			"1,",
+			"3,",
+			"0",
+			"2",
+			"0",
+			"1",
+			"2",
+			"6",
+			"64",
+			"(P.th"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 6,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "simulations/boids.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4811,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4373,
+								4373
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1211.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "simulations/universe.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2502,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1575,
+								1575
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1742.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/pupkich/projects/chordgen.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1732,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								421,
+								421
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1681,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								816,
+								816
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/pupkich/Документы/physgraph.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 642,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								187,
+								187
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2196,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								955,
+								955
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/home/pupkich/Документы/Операционные системы/лабы/1.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1601,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1601,
+								1601
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1191.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 32.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 341.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Python/Python.sublime-build",
+	"project": "gameproj.sublime-project",
+	"replace":
+	{
+		"height": 80.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
